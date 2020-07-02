@@ -5,6 +5,8 @@ import {JwtPayload} from "./jwt-payload.interface";
 import {UserRepository} from "./user.repository";
 import {InjectRepository} from "@nestjs/typeorm";
 import {User} from "./user.entity";
+import * as config from 'config';
+
 
 
 @Injectable()
@@ -16,7 +18,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-            secretOrKey: 'topSecret51',
+            secretOrKey: process.env.JWT_SECRET || config.get('jwt.secret'),
         });
     }
 
